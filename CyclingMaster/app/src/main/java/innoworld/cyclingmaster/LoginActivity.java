@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,12 +16,18 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import innoworld.cyclingmaster.model.LoginReponse;
+import innoworld.cyclingmaster.network.NetworkService;
+import retrofit.RestAdapter;
 
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
@@ -35,6 +42,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private ProgressDialog progressDialog;
     private SessionManager session;
+    private NetworkService networkService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +52,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         //Toolbar toolBar = (Toolbar) findViewById(R.id.toolbar);
         //setSupportActionBar(toolBar);
         //initializing views
+        RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint(Appconfig.URL_LOGIN).build();
+        networkService = restAdapter.create(NetworkService.class);
+
+
+
         registerHere=(Button)findViewById(R.id.registerhere_button);
         signIn=(Button)findViewById(R.id.signin_button);
         emailLogin=(TextInputLayout)findViewById(R.id.email_loginlayout);
@@ -89,10 +102,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 hideDialog();
 
                 try {
+                    LoginReponse loginReponse = new Gson().fromJson(response, LoginReponse.class);
+                    String  username = loginReponse.getUser().email;
+                    Log.d("username",username);
                     JSONObject jObj = new JSONObject(response);
-                    int userId= jObj.getInt("uid"); 
+                    int userId= jObj.getInt("uid");
 
-                    if (userId >0) { 
+                    if (userId >0) {
                         // user successfully logged in
                         // Create login session
                         session.setLogin(true);
@@ -137,7 +153,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         };
 
         // Adding request to  queue
-        AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
+        AppController.getInstance().addToRequestQueue(strReq);
     }
 
     /*
