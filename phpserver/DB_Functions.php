@@ -43,14 +43,14 @@ class DB_Functions {
     /**
      * Get user by email and password
      */
-    public function getUserByEmailAndPassword($username, $password) {
-        $result = mysqli_query($this->db->con,"select * from member where username='$username' and password='$password'") or die(mysqli_connect_errno());
+    public function getUserByEmailAndPassword($email, $password) {
+        $result = mysqli_query($this->db->con,"select * from member where email='$email' and password='$password'") or die(mysqli_connect_errno());
         // check for result 
         $no_of_rows = mysqli_num_rows($result);
         if ($no_of_rows > 0) {
             $user = $result->fetch_array(MYSQLI_ASSOC);
 			   return array("id" => $user['id'],
-                            "email" => $user['username'],
+                            "email" => $user['email'],
                             "password" => $user['password']
              );
 			}else{

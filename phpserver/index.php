@@ -1,5 +1,5 @@
 <?php
- 
+ error_reporting(0); //--------------------------------------------------------------------------------------------------------------------------------------------------------------------- aku tambah ini
 /**
  * File to handle all API requests
  * Accepts GET and POST
@@ -67,9 +67,9 @@ if (isset($_REQUEST['tag']) && $_REQUEST['tag'] != '') {
         } else {
             // store user
             $user = $db->storeUser($username, $firstname, $lastname, $password, $email, $created_at);
-            if ($user) {
+            if (is_array($user)) {
                 // user stored successfully
-                $response["error"] = FALSE;
+                $response["error"] = 0; 
                 $response["uid"] = $user["uid"];
                 $response["user"]["username"] = $user["username"];
 				$response["user"]["firstname"] = $user["firstname"];
@@ -78,9 +78,10 @@ if (isset($_REQUEST['tag']) && $_REQUEST['tag'] != '') {
                 $response["user"]["email"] = $user["email"];
                 $response["user"]["created_at"] = $user["created_at"];
                 echo json_encode($response);
+                //file_put_contents('resp_reg_ok.txt',json_encode($response));
             } else {
                 // user failed to store
-                $response["error"] = TRUE;
+                $response["error"] = 1; 
                 $response["error_msg"] = "Error occured in Registartion";
                 echo json_encode($response);
             }

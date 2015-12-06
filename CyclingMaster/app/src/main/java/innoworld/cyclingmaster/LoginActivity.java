@@ -90,9 +90,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                 try {
                     JSONObject jObj = new JSONObject(response);
-                    int userId= jObj.getInt("uid"); 
+                    int userId= jObj.getInt("uid"); //-- 8gX
 
-                    if (userId >0) { 
+                    if (userId >0) { //-- 8gX
                         // user successfully logged in
                         // Create login session
                         session.setLogin(true);

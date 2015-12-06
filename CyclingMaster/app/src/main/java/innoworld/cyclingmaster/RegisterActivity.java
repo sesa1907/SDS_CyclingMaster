@@ -72,7 +72,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         //setting toolbar
         //Toolbar toolBar = (Toolbar) findViewById(R.id.toolbar);
-       // setSupportActionBar(toolBar);
+        // setSupportActionBar(toolBar);
 
         tvLogin.setOnClickListener(this);
         registerButton.setOnClickListener(this);
@@ -101,6 +101,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
      */
     private void registerUser(final String username, final String firstname, final String lastname, final String email,
                               final String password) {
+
         // Tag used to cancel the request
         String tag_string_req = "req_register";
 
@@ -115,9 +116,12 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 hideDialog();
 
                 try {
+
                     JSONObject jObj = new JSONObject(response);
-                    boolean error = jObj.getBoolean("error");
-                    if (!error) {
+                    int error = jObj.getInt("error");
+//                    Log.d("isierur","isinya "+error);
+//                    Log.d("json",jObj.toString());
+                    if (error==0) {
                         // User successfully stored in MySQL
                         // Now store the user in sqlite
                         String uid = jObj.getString("uid");
@@ -131,7 +135,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         //writing the value to sharedpreference which we will be showing in main screen
                         AppController.setString(RegisterActivity.this, "uid", uid);
                         AppController.setString(RegisterActivity.this, "username", username);
-                       // AppController.setString(RegisterActivity.this, "firstname", firstname);
+                        // AppController.setString(RegisterActivity.this, "firstname", firstname);
                         //AppController.setString(RegisterActivity.this, "lastname", lastname);
                         AppController.setString(RegisterActivity.this, "email", email);
                         AppController.setString(RegisterActivity.this, "created_at", created_at);
@@ -145,7 +149,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         // message
                         String errorMsg = jObj.getString("error_msg");
                         Toast.makeText(getApplicationContext(),
-                                errorMsg, Toast.LENGTH_LONG).show();
+                                errorMsg+error, Toast.LENGTH_LONG).show();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
