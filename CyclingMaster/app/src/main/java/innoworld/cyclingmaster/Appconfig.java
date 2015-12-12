@@ -5,7 +5,7 @@ package innoworld.cyclingmaster;
  */
 public class Appconfig {
     // Server login url
-    public static String URL_LOGIN = "http://192.168.173.1/phpserver?tag=login";
+    public static String URL_LOGIN = "http://192.168.1.100/phpserver";
 
     // Server register url
     public static String URL_REGISTER = "http://192.168.1.120/tmp/phpserver/";

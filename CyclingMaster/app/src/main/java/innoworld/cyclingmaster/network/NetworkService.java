@@ -12,5 +12,5 @@ import retrofit.http.Query;
 public interface NetworkService {
 
     @GET("/index.php")
-    List<LoginReponse> loginReponses(@Query("tag") String tag);
+    Object loginReponses(@Query("tag") String tag,@Query("email")String email,@Query("password") String password);
 }

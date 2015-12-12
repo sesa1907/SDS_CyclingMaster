@@ -2,6 +2,7 @@ package innoworld.cyclingmaster;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
@@ -12,11 +13,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,7 +35,7 @@ import innoworld.cyclingmaster.network.NetworkService;
 import retrofit.RestAdapter;
 
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
 
     Button registerHere;
@@ -56,11 +61,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         networkService = restAdapter.create(NetworkService.class);
 
 
-
-        registerHere=(Button)findViewById(R.id.registerhere_button);
-        signIn=(Button)findViewById(R.id.signin_button);
-        emailLogin=(TextInputLayout)findViewById(R.id.email_loginlayout);
-        passwordLogin=(TextInputLayout)findViewById(R.id.password_loginlayout);
+        registerHere = (Button) findViewById(R.id.registerhere_button);
+        signIn = (Button) findViewById(R.id.signin_button);
+        emailLogin = (TextInputLayout) findViewById(R.id.email_loginlayout);
+        passwordLogin = (TextInputLayout) findViewById(R.id.password_loginlayout);
         etEmailLogin = (EditText) findViewById(R.id.email_login);
         etPasswordLogin = (EditText) findViewById(R.id.password_login);
         //setting onclick listeners
@@ -83,78 +87,46 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
-
     /**
      * function to verify login details
-     * */
+     */
+    private class AsyncTask extends android.os.AsyncTask{
+
+        private String email;
+
+        private String password;
+
+        public AsyncTask(String email, String password) {
+            this.email = email;
+            this.password = password;
+        }
+
+        @Override
+        protected void onPreExecute() {
+
+        }
+
+        @Override
+        protected Object doInBackground(Object[] params) {
+            Object o = networkService.loginReponses("login", email, password);
+            LoginReponse loginReponse = (LoginReponse)o;
+            return loginReponse;
+        }
+
+        @Override
+        protected void onPostExecute(Object o) {
+
+        }
+    }
+
     private void checkLogin(final String email, final String password) {
         // Tag used to cancel the request
         String tag_string_req = "req_login";
+        new AsyncTask(email,password).execute();
 
-        progressDialog.setMessage("Logging in ...");
-        showDialog();
-
-        StringRequest strReq = new StringRequest(Request.Method.POST,
-                Appconfig.URL_LOGIN, new Response.Listener<String>() {
-
-            @Override
-            public void onResponse(String response) {
-                hideDialog();
-
-                try {
-                    LoginReponse loginReponse = new Gson().fromJson(response, LoginReponse.class);
-                    String  username = loginReponse.getUser().email;
-                    Log.d("username",username);
-                    JSONObject jObj = new JSONObject(response);
-                    int userId= jObj.getInt("uid");
-
-                    if (userId >0) {
-                        // user successfully logged in
-                        // Create login session
-                        session.setLogin(true);
-
-                        // Launching  main activity
-                        Intent intent = new Intent(LoginActivity.this,
-                                MainActivity.class);
-                        startActivity(intent);
-                        finish();
-                    } else {
-                        // login error
-                        String errorMsg = jObj.getString("error_msg");
-                        Toast.makeText(getApplicationContext(),
-                                errorMsg, Toast.LENGTH_LONG).show();
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        }, new Response.ErrorListener() {
-
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getApplicationContext(),
-                        "Error Resp: " + error.getMessage(), Toast.LENGTH_LONG).show();
-                hideDialog();
-            }
-        }) {
-
-            @Override
-            protected Map<String, String> getParams() {
-                // Post params to login url
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("tag", "login");
-                params.put("email", email);
-                params.put("password", password);
-
-                return params;
-            }
-
-        };
-
-        // Adding request to  queue
-        AppController.getInstance().addToRequestQueue(strReq);
     }
+
+
 
     /*
     function to show dialog
@@ -173,11 +145,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
 
-
     @Override
     public void onClick(View v) {
-        switch (v.getId())
-        {
+        switch (v.getId()) {
             //on clicking register button move to Register Activity
             case R.id.registerhere_button:
                 Intent intent = new Intent(getApplicationContext(),
