@@ -23,4 +23,45 @@
         completions."
     </string>
     <string name="title_activity_record">Record Ride</string>
+
+    <!-- Names -->
+    <string-array name="Member_names">
+        <item>John</item>
+        <item>Alex</item>
+        <item>Pavan</item>
+        <item>Maddy</item>
+        <item>Robbin</item>
+        <item>Nick</item>
+    </string-array>
+    <!-- LEADERBOARD -->
+    <!-- Pictures -->
+    <array name="profile_pics">
+        <item>@drawable/cm_logo</item>
+        <item>@drawable/cm_logo</item>
+        <item>@drawable/cm_logo</item>
+        <item>@drawable/cm_logo</item>
+        <item>@drawable/cm_logo</item>
+        <item>@drawable/cm_logo</item>
+    </array>
+
+    <!-- Total ride perKM  -->
+    <string-array name="statues">
+        <item>4500 points</item>
+        <item>3800 points</item>
+        <item>3000 points</item>
+        <item>2500 points</item>
+        <item>1700 points</item>
+        <item>1300 points</item>
+    </string-array>
+
+    <!-- XP -->
+    <string-array name="contactType">
+        <item>Level 9</item>
+        <item>Level 7</item>
+        <item>Level 6</item>
+        <item>Level 5</item>
+        <item>Level 3</item>
+        <item>Level 2</item>
+    </string-array>
+
 </resources>

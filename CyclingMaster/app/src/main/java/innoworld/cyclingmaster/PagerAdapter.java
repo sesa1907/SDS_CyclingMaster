@@ -26,7 +26,7 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
                 Leaderboard tab2 = new Leaderboard();
                 return tab2;
             case 2:
-                Award tab3 = new Award();
+                Route tab3 = new Route();
                 return tab3;
             default:
                 return null;
