@@ -43,9 +43,11 @@ public class CustomAdapter extends BaseAdapter {
 
     /* private view holder class */
     private class ViewHolder {
+        TextView rank;
         ImageView profile_pic;
         TextView member_name;
         TextView totalride;
+        ImageView badge;
         TextView xp;
     }
 
@@ -60,19 +62,26 @@ public class CustomAdapter extends BaseAdapter {
             convertView = mInflater.inflate(R.layout.list_item, null);
             holder = new ViewHolder();
 
+            holder.rank = (TextView) convertView
+                    .findViewById(R.id.rank);
             holder.member_name = (TextView) convertView
                     .findViewById(R.id.member_name);
             holder.profile_pic = (ImageView) convertView
                     .findViewById(R.id.profile_pic);
-            holder.totalride = (TextView) convertView.findViewById(R.id.status);
+            holder.totalride = (TextView) convertView
+                    .findViewById(R.id.totalride);
+            holder.badge = (ImageView) convertView
+                    .findViewById(R.id.badge);
             holder.xp = (TextView) convertView
-                    .findViewById(R.id.contact_type);
+                    .findViewById(R.id.xp);
 
             RowItem row_pos = rowItems.get(position);
 
             holder.profile_pic.setImageResource(row_pos.getProfile_pic_id());
+            holder.rank.setText(row_pos.getRank());
             holder.member_name.setText(row_pos.getMember_name());
             holder.totalride.setText(row_pos.gettotalride());
+            holder.badge.setImageResource(row_pos.getBadge());
             holder.xp.setText(row_pos.getxp());
 
             convertView.setTag(holder);

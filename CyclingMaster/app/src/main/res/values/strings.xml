@@ -24,6 +24,16 @@
     </string>
     <string name="title_activity_record">Record Ride</string>
 
+    <!-- LEADERBOARD -->
+    <string-array name="rank">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+    </string-array>
+
     <!-- Names -->
     <string-array name="Member_names">
         <item>John</item>
@@ -33,35 +43,45 @@
         <item>Robbin</item>
         <item>Nick</item>
     </string-array>
-    <!-- LEADERBOARD -->
+
     <!-- Pictures -->
     <array name="profile_pics">
-        <item>@drawable/cm_logo</item>
-        <item>@drawable/cm_logo</item>
-        <item>@drawable/cm_logo</item>
-        <item>@drawable/cm_logo</item>
-        <item>@drawable/cm_logo</item>
-        <item>@drawable/cm_logo</item>
+        <item>@drawable/hill</item>
+        <item>@drawable/pp</item>
+        <item>@drawable/pp2</item>
+        <item>@drawable/pp3</item>
+        <item>@drawable/pp4</item>
+        <item>@drawable/pp5</item>
     </array>
 
     <!-- Total ride perKM  -->
-    <string-array name="statues">
-        <item>4500 points</item>
-        <item>3800 points</item>
-        <item>3000 points</item>
-        <item>2500 points</item>
-        <item>1700 points</item>
-        <item>1300 points</item>
+    <string-array name="totalride">
+        <item>Legend | Level 93</item>
+        <item>Master | Level 70</item>
+        <item>Expert | Level 62</item>
+        <item>Veteran | Level 56</item>
+        <item>Semi-Pro | Level 33</item>
+        <item>Semi-Pro | Level 29</item>
     </string-array>
 
+    <!-- Badge  -->
+    <array name="badge">
+        <item>@drawable/badge</item>
+        <item>@drawable/badge</item>
+        <item>@drawable/badge</item>
+        <item>@drawable/badge</item>
+        <item>@drawable/badge</item>
+        <item>@drawable/badge</item>
+    </array>
+
     <!-- XP -->
-    <string-array name="contactType">
-        <item>Level 9</item>
-        <item>Level 7</item>
-        <item>Level 6</item>
-        <item>Level 5</item>
-        <item>Level 3</item>
-        <item>Level 2</item>
+    <string-array name="xp">
+        <item>4500</item>
+        <item>3800</item>
+        <item>3000</item>
+        <item>2500</item>
+        <item>1700</item>
+        <item>1300</item>
     </string-array>
 
 </resources>

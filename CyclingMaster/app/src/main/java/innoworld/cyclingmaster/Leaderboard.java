@@ -19,9 +19,11 @@ import java.util.List;
  */
 public class Leaderboard extends ListFragment {
 
+    String[] rank;
     String[] member_names;
     TypedArray profile_pics;
     String[] totalride;
+    TypedArray badge;
     String[] xp;
     List<RowItem> rowItems;
     ListView mylistview;
@@ -39,15 +41,17 @@ public class Leaderboard extends ListFragment {
         super.onActivityCreated(savedInstanceState);
         rowItems = new ArrayList<RowItem>();
 
+        rank = getResources().getStringArray(R.array.rank);
         member_names = getResources().getStringArray(R.array.Member_names);
         profile_pics = getResources().obtainTypedArray(R.array.profile_pics);
-        totalride = getResources().getStringArray(R.array.statues);
-        xp = getResources().getStringArray(R.array.contactType);
+        totalride = getResources().getStringArray(R.array.totalride);
+        badge = getResources().obtainTypedArray(R.array.badge);
+        xp = getResources().getStringArray(R.array.xp);
 
         for (int i = 0; i < member_names.length; i++) {
-            RowItem item = new RowItem(member_names[i],
+            RowItem item = new RowItem(rank[i],member_names[i],
                     profile_pics.getResourceId(i, -1), totalride[i],
-                    xp[i]);
+                    badge.getResourceId(i, -1),xp[i]);
             rowItems.add(item);
         }
         CustomAdapter adapter = new CustomAdapter(getActivity(), rowItems);
